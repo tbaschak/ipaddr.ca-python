@@ -27,6 +27,8 @@ def simple_ptr():
         ptr = socket.getnameinfo((request.remote_addr,0),0)[0]
     except socket.error:
         ptr = "none"
+    if ptr == request.remote_addr:
+        ptr = "none"
     resp = Response(ptr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Access-Control-Allow-Methods'] = 'GET'
@@ -46,6 +48,8 @@ def json_ipaddr_ptr():
     try:
         ptr = socket.getnameinfo((request.remote_addr,0),0)[0]
     except socket.error:
+        ptr = "none"
+    if ptr == request.remote_addr:
         ptr = "none"
     resp = jsonify({'ptr': ptr })
     resp.headers['Access-Control-Allow-Origin'] = '*'
