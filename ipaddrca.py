@@ -25,7 +25,7 @@ def simple_ip():
 def simple_ptr():
     try:
         tmpptr = gethostbyaddr(request.remote_addr)
-        ptr = ptr[0]
+        ptr = tmpptr[0]
     except gaierror:
         ptr = "none"
     resp = Response(ptr)
@@ -46,7 +46,7 @@ def json_ipaddr_ip():
 def json_ipaddr_ptr():
     try:
         tmpptr = gethostbyaddr(request.remote_addr)
-        ptr = ptr[0]
+        ptr = tmpptr[0]
     except gaierror:
         ptr = "none"
     resp = jsonify({'ptr': ptr })
