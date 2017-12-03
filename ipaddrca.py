@@ -1,7 +1,7 @@
 import os
 import json
 from flask import Flask, request, jsonify, Response
-from socket import gethostbyaddr, gaierror
+import socket
 from pierky.ipdetailscache import IPDetailsCache
 
 cache = IPDetailsCache()
@@ -24,9 +24,8 @@ def simple_ip():
 @app.route("/ptr", methods=["GET"])
 def simple_ptr():
     try:
-        tmpptr = gethostbyaddr(request.remote_addr)
-        ptr = tmpptr[0]
-    except gaierror:
+        ptr = socket.getnameinfo((ip, 0), 0)[0]
+    except socket.error:
         ptr = "none"
     resp = Response(ptr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
@@ -45,9 +44,8 @@ def json_ipaddr_ip():
 @app.route("/api/ptr", methods=["GET"])
 def json_ipaddr_ptr():
     try:
-        tmpptr = gethostbyaddr(request.remote_addr)
-        ptr = tmpptr[0]
-    except gaierror:
+        ptr = socket.getnameinfo((ip, 0), 0)[0]
+    except socket.error:
         ptr = "none"
     resp = jsonify({'ptr': ptr })
     resp.headers['Access-Control-Allow-Origin'] = '*'
