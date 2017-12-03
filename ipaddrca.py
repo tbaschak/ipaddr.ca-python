@@ -24,7 +24,8 @@ def simple_ip():
 @app.route("/ptr", methods=["GET"])
 def simple_ptr():
     try:
-        ptr = socket.getnameinfo((ip, 0), 0)[0]
+        tmpptr = socket.getnameinfo((ip, 0), 0)
+        ptr = tmpptr[0]
     except socket.error:
         ptr = "none"
     resp = Response(ptr)
@@ -44,7 +45,8 @@ def json_ipaddr_ip():
 @app.route("/api/ptr", methods=["GET"])
 def json_ipaddr_ptr():
     try:
-        ptr = socket.getnameinfo((ip, 0), 0)[0]
+        tmpptr = socket.getnameinfo((ip, 0), 0)
+        ptr = tmpptr[0]
     except socket.error:
         ptr = "none"
     resp = jsonify({'ptr': ptr })
